@@ -1,0 +1,343 @@
+|
+|mess Determining New HV values - implement HV checks
+|
+sigma gd = cent/sqrt(exp(logud))
+sigma dgd = 5000.0 - gd
+sigma dvd = (HVD * dgd)/(gd*4.0)
+do i=1,48
+   if ((cent([i]).gt.4950.).and.(cent([i]).lt.5050.)) then
+     if (abs(logud([i])).lt.0.075) then
+        vec/in dvd([i]) 0.
+     endif
+   endif
+   if (dvd([i]).ge.250.) then
+      vec/in dvd([i]) 250.
+   elseif (dvd([i]).lt.-250.) then
+      vec/in dvd([i]) -250.
+   endif
+enddo
+sigma new_vd = HVD+dvd
+do i=1,48
+   if (new_vd([i]).gt.2800.) then
+      vec/in new_vd([i]) 2800.
+   endif
+enddo
+|
+sigma gu = cent*sqrt(exp(logud))
+sigma dgu = 5000.0 - gu
+sigma dvu = (HVU * dgu)/(gu*4.0)
+do i=1,48
+   if ((cent([i]).gt.4950.).and.(cent([i]).lt.5050.)) then
+     if (abs(logud([i])).lt.0.075) then
+        vec/in dvu([i]) 0.
+     endif
+   endif  
+   if (dvu([i]).ge.250.) then
+      vec/in dvu([i]) 250.
+   elseif (dvu([i]).lt.-250.) then
+      vec/in dvu([i]) -250.
+   endif
+enddo
+sigma new_vu = HVU+dvu
+do i=1,48
+   if (new_vu([i]).gt.2800.) then
+      vec/in new_vu([i]) 2800.
+   endif
+enddo
+|
+mess Writing out new HV values
+vec/write CHAN,new_vu,new_vd fname='new-hv.dat' format='f4.1,3x,f8.0,3x,f8.0'
+vec/write CHAN,dvu,dvd fname='new-dhv.dat' format='f4.1,3x,f8.0,3x,f8.0'
+vec/write CHAN,cent,logud fname='summary-6414.dat' format='f6.2,3x,f8.0,3x,f9.6'
+|
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|
+return
+|
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|
+macro title-cent-1
+|
+  selnt 1
+  set txci 2
+  iname = cent(1)
+  text 3.90 17.75 [iname] 0.2
+  iname = cent(2)
+  text 7.05 17.75 [iname] 0.2
+  iname = cent(3)
+  text 10.30 17.75 [iname] 0.2
+  iname = cent(4)
+  text 13.50 17.75 [iname] 0.2
+  iname = cent(5)
+  text 16.75 17.75 [iname] 0.2
+  iname = cent(6)
+  text 3.90 14.35 [iname] 0.2
+  iname = cent(7)
+  text 7.05 14.35 [iname] 0.2
+  iname = cent(8)
+  text 10.30 14.35 [iname] 0.2
+  iname = cent(9)
+  text 13.50 14.35 [iname] 0.2
+  iname = cent(10)
+  text 16.75 14.35 [iname] 0.2
+  iname = cent(11)
+  text 3.90 10.95 [iname] 0.2
+  iname = cent(12)
+  text 7.05 10.95 [iname] 0.2
+  iname = cent(13)
+  text 10.30 10.95 [iname] 0.2
+  iname = cent(14)
+  text 13.50 10.95 [iname] 0.2
+  iname = cent(15)
+  text 16.75 10.95 [iname] 0.2
+  iname = cent(16)
+  text 3.90 7.55 [iname] 0.2
+  iname = cent(17)
+  text 7.05 7.55 [iname] 0.2
+  iname = cent(18)
+  text 10.30 7.55 [iname] 0.2
+  iname = cent(19)
+  text 13.50 7.55 [iname] 0.2
+  iname = cent(20)
+  text 16.75 7.55 [iname] 0.2
+  iname = cent(21)
+  text 3.90 4.15 [iname] 0.2
+  iname = cent(22)
+  text 7.05 4.15 [iname] 0.2
+  iname = cent(23)
+  text 10.30 4.15 [iname] 0.2
+  iname = cent(24)
+  text 13.50 4.15 [iname] 0.2
+  iname = cent(25)
+  text 16.75 4.15 [iname] 0.2
+  set txci 1
+return
+|
+macro title-cent-2
+|
+  selnt 1
+  set txci 2
+  iname = cent(26)
+  text 3.90 17.75 [iname] 0.2
+  iname = cent(27)
+  text 7.05 17.75 [iname] 0.2
+  iname = cent(28)
+  text 10.30 17.75 [iname] 0.2
+  iname = cent(29)
+  text 13.50 17.75 [iname] 0.2
+  iname = cent(30)
+  text 16.75 17.75 [iname] 0.2
+  iname = cent(31)
+  text 3.90 14.35 [iname] 0.2
+  iname = cent(32)
+  text 7.05 14.35 [iname] 0.2
+  iname = cent(33)
+  text 10.30 14.35 [iname] 0.2
+  iname = cent(34)
+  text 13.50 14.35 [iname] 0.2
+  iname = cent(35)
+  text 16.75 14.35 [iname] 0.2
+  iname = cent(36)
+  text 3.90 10.95 [iname] 0.2
+  iname = cent(37)
+  text 7.05 10.95 [iname] 0.2
+  iname = cent(38)
+  text 10.30 10.95 [iname] 0.2
+  iname = cent(39)
+  text 13.50 10.95 [iname] 0.2
+  iname = cent(40)
+  text 16.75 10.95 [iname] 0.2
+  iname = cent(41)
+  text 3.90 7.55 [iname] 0.2
+  iname = cent(42)
+  text 7.05 7.55 [iname] 0.2
+  iname = cent(43)
+  text 10.30 7.55 [iname] 0.2
+  iname = cent(44)
+  text 13.50 7.55 [iname] 0.2
+  iname = cent(45)
+  text 16.75 7.55 [iname] 0.2
+  iname = cent(46)
+  text 3.90 4.15 [iname] 0.2
+  iname = cent(47)
+  text 7.05 4.15 [iname] 0.2
+  iname = cent(48)
+  text 10.30 4.15 [iname] 0.2
+  set txci 1
+return
+|
+macro title-log-1
+|
+  selnt 1
+  set txci 2
+  iname = logud(1)
+  text 3.90 17.75 [iname] 0.2
+  iname = logud(2)
+  text 7.05 17.75 [iname] 0.2
+  iname = logud(3)
+  text 10.30 17.75 [iname] 0.2
+  iname = logud(4)
+  text 13.50 17.75 [iname] 0.2
+  iname = logud(5)
+  text 16.75 17.75 [iname] 0.2
+  iname = logud(6)
+  text 3.90 14.35 [iname] 0.2
+  iname = logud(7)
+  text 7.05 14.35 [iname] 0.2
+  iname = logud(8)
+  text 10.30 14.35 [iname] 0.2
+  iname = logud(9)
+  text 13.50 14.35 [iname] 0.2
+  iname = logud(10)
+  text 16.75 14.35 [iname] 0.2
+  iname = logud(11)
+  text 3.90 10.95 [iname] 0.2
+  iname = logud(12)
+  text 7.05 10.95 [iname] 0.2
+  iname = logud(13)
+  text 10.30 10.95 [iname] 0.2
+  iname = logud(14)
+  text 13.50 10.95 [iname] 0.2
+  iname = logud(15)
+  text 16.75 10.95 [iname] 0.2
+  iname = logud(16)
+  text 3.90 7.55 [iname] 0.2
+  iname = logud(17)
+  text 7.05 7.55 [iname] 0.2
+  iname = logud(18)
+  text 10.30 7.55 [iname] 0.2
+  iname = logud(19)
+  text 13.50 7.55 [iname] 0.2
+  iname = logud(20)
+  text 16.75 7.55 [iname] 0.2
+  iname = logud(21)
+  text 3.90 4.15 [iname] 0.2
+  iname = logud(22)
+  text 7.05 4.15 [iname] 0.2
+  iname = logud(23)
+  text 10.30 4.15 [iname] 0.2
+  iname = logud(24)
+  text 13.50 4.15 [iname] 0.2
+  iname = logud(25)
+  text 16.75 4.15 [iname] 0.2
+  set txci 1
+return
+|
+macro title-log-2
+|
+  selnt 1
+  set txci 2
+  iname = logud(26)
+  text 3.90 17.75 [iname] 0.2
+  iname = logud(27)
+  text 7.05 17.75 [iname] 0.2
+  iname = logud(28)
+  text 10.30 17.75 [iname] 0.2
+  iname = logud(29)
+  text 13.50 17.75 [iname] 0.2
+  iname = logud(30)
+  text 16.75 17.75 [iname] 0.2
+  iname = logud(31)
+  text 3.90 14.35 [iname] 0.2
+  iname = logud(32)
+  text 7.05 14.35 [iname] 0.2
+  iname = logud(33)
+  text 10.30 14.35 [iname] 0.2
+  iname = logud(34)
+  text 13.50 14.35 [iname] 0.2
+  iname = logud(35)
+  text 16.75 14.35 [iname] 0.2
+  iname = logud(36)
+  text 3.90 10.95 [iname] 0.2
+  iname = logud(37)
+  text 7.05 10.95 [iname] 0.2
+  iname = logud(38)
+  text 10.30 10.95 [iname] 0.2
+  iname = logud(39)
+  text 13.50 10.95 [iname] 0.2
+  iname = logud(40)
+  text 16.75 10.95 [iname] 0.2
+  iname = logud(41)
+  text 3.90 7.55 [iname] 0.2
+  iname = logud(42)
+  text 7.05 7.55 [iname] 0.2
+  iname = logud(43)
+  text 10.30 7.55 [iname] 0.2
+  iname = logud(44)
+  text 13.50 7.55 [iname] 0.2
+  iname = logud(45)
+  text 16.75 7.55 [iname] 0.2
+  iname = logud(36)
+  text 3.90 4.15 [iname] 0.2
+  iname = logud(47)
+  text 7.05 4.15 [iname] 0.2
+  iname = logud(48)
+  text 10.30 4.15 [iname] 0.2
+  set txci 1
+return
+|
+macro number-1
+|
+selnt 1
+set txci 4
+text 3.1 17.75 '1' 0.2
+text 6.3 17.75 '2' 0.2
+text 9.5 17.75 '3' 0.2
+text 12.7 17.75 '4' 0.2
+text 15.9 17.75 '5' 0.2
+text 3.1 14.35 '6' 0.2
+text 6.3 14.35 '7' 0.2
+text 9.5 14.35 '8' 0.2
+text 12.7 14.35 '9' 0.2
+text 15.9 14.35 '10' 0.2
+text 3.1 10.95 '11' 0.2
+text 6.3 10.95 '12' 0.2
+text 9.5 10.95 '13' 0.2
+text 12.7 10.95 '14' 0.2
+text 15.9 10.95 '15' 0.2
+text 3.1 7.55 '16' 0.2
+text 6.3 7.55 '17' 0.2
+text 9.5 7.55 '18' 0.2
+text 12.7 7.55 '19' 0.2
+text 15.9 7.55 '20' 0.2
+text 3.1 4.15 '21' 0.2
+text 6.3 4.15 '22' 0.2
+text 9.5 4.15 '23' 0.2
+text 12.7 4.15 '24' 0.2
+text 15.9 4.15 '25' 0.2
+set txci 1
+|
+return
+|
+macro number-2
+|
+selnt 1
+set txci 4
+text 3.1 17.75 '26' 0.2
+text 6.3 17.75 '27' 0.2
+text 9.5 17.75 '28' 0.2
+text 12.7 17.75 '29' 0.2
+text 15.9 17.75 '30' 0.2
+text 3.1 14.35 '31' 0.2
+text 6.3 14.35 '32' 0.2
+text 9.5 14.35 '33' 0.2
+text 12.7 14.35 '34' 0.2
+text 15.9 14.35 '35' 0.2
+text 3.1 10.95 '36' 0.2
+text 6.3 10.95 '37' 0.2
+text 9.5 10.95 '38' 0.2
+text 12.7 10.95 '39' 0.2
+text 15.9 10.95 '40' 0.2
+text 3.1 7.55 '41' 0.2
+text 6.3 7.55 '42' 0.2
+text 9.5 7.55 '43' 0.2
+text 12.7 7.55 '44' 0.2
+text 15.9 7.55 '45' 0.2
+text 3.1 4.15 '46' 0.2
+text 6.3 4.15 '47' 0.2
+text 9.5 4.15 '48' 0.2
+set txci 1
+|
+return
+
